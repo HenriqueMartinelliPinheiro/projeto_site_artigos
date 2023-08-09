@@ -8,7 +8,7 @@ router.get("/categories", (req,res)=>{
 });
 
 router.get("/admin/categories/new", (req,res)=>{
-    res.render("admin/newCategory");
+    res.render("admin/category/newCategory");
 });
 
 router.post("/categories/save",(req,res)=>{
@@ -20,12 +20,62 @@ router.post("/categories/save",(req,res)=>{
             title: title,
             slug: slugify(title)
         }).then(()=>{
-            res.redirect("/");
+            res.redirect("/admin/categories");
         });
 
     } else{
-        res.render("admin/newCategory");
+        res.render("/admin/categories");
     }
+});
+
+router.get("/admin/categories",(req,res)=>{
+    Category.findAll().then(categories=>{
+        res.render("admin/category/index", {categories: categories});
+    });
+});
+
+router.post("/categories/delete",(req,res)=>{
+    let id = req.body.id;
+    console.log(id);
+    if(id!= undefined){
+
+            Category.destroy({
+                where:{
+                    id: id
+                }
+            }).then(()=>{
+                res.redirect("/admin/categories")
+            });
+    } else{
+        res.redirect("/");
+    }
+});
+
+router.post("/admin/categories/edit",(req,res)=>{
+    let id = req.body.id;
+    Category.findByPk(id).then((category)=>{
+        if (category!=undefined) {
+            res.render("admin/category/editCategory",{category: category});
+        } else{
+            res.render("/admin/categories/new");
+        }
+    }).catch((error)=>{
+        res.render("/admin/categories");
+    });
+});
+
+router.post("/categories/update",(req,res)=>{
+    let id = req.body.id;
+    let title = req.body.title;
+    console.log(req.body.title);
+    Category.update({title: title,slug: slugify(title)},{where: {id:id}})
+    .then(()=>{
+        res.redirect("/admin/categories");
+    })
+    .catch((error)=>{
+        console.log(error);
+        res.redirect("/");
+    });
 });
 
 module.exports = router;

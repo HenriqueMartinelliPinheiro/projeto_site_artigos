@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia Press</title>
+    <title>Artigle</title>
 
     <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"  crossorigin="anonymous">
 </head>
@@ -20,14 +20,17 @@
             <hr>
             <div class="card">
                 <div class="card-header">
-                    <h2>Cadastro de Categorias</h2>
+                    <h2>Editar Categoria</h2>
                 </div>
 
                 <div class="card-body">
-                    <form action="/categories/save" method="POST">
-                        <input type="text" name="title" placeholder="Título da categoria" class="form-control">
-                        <br><button class="btn btn-success">Cadastrar</button>
+                    <form action="/categories/update" method="POST">
+                        <input type="hidden" name="id" value="<%= category.id%> " class="form-control">
+                        <br><input type="text" name="title" placeholder="Título da categoria" value="<%= category.title%>" class="form-control">
+                        <br><button class="btn btn-success">Atualizar</button>
+                        <a href="/admin/categories" class="btn btn-danger">Cancelar</a></a>
                     </form>
+                       
                 </div>
             </div>
         </div>
