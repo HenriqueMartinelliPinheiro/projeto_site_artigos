@@ -11,10 +11,16 @@
 
     <body>
 
-        <nav class="navbar navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/user/articles">
                 Artigle
-            </a>
+            </a>    
+        
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/articles">Artigos</a>
+                </li>
+            </ul>
         </nav>
 
         <div class="container">
@@ -31,7 +37,25 @@
                 </thead>
 
                 <tbody>
-                    
+
+                    <% articles.forEach(article =>{%>
+                        <tr>
+                            <th><%=article.title%></th>
+                            <th><%=article.slug%></th>
+                            <th><%=article.category.title%></th>
+                            <th>
+                                <form action="/user/articles/edit" method="POST" style="display: inline">
+                                    <input type="hidden" name="id" value="<%=article.id%>">
+                                    <button class="btn btn-primary">Editar</button>
+                                </form>
+                                <form action="/articles/delete" method="POST" style="display: inline" onsubmit="deleteConfirm(event,this)">
+                                    <input type="hidden" name="id" value="<%=article.id%>">
+                                    <button class="btn btn-secondary">Deletar</button>
+                                </form>
+                            </th>
+                        </tr>
+                    <%})%>
+                   
                 </tbody>
             </table>
         </div>
@@ -44,7 +68,7 @@
 <script>
     function deleteConfirm(event, form){
         event.preventDefault();
-        let decision=confirm("Tem certeza que deseja deletar esta categoria.")
+        let decision=confirm("Tem certeza que deseja deletar este artigo.")
         if (decision) {
             form.submit();
         }

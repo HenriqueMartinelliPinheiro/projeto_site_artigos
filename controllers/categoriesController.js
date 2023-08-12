@@ -3,10 +3,6 @@ const Category = require("../database/models/Category");
 const { default: slugify } = require("slugify");
 const router = express.Router();
 
-router.get("/categories", (req,res)=>{
-    res.send("Rotas de categorias.");
-});
-
 router.get("/admin/categories/new", (req,res)=>{
     res.render("admin/category/newCategory");
 });
@@ -36,7 +32,6 @@ router.get("/admin/categories",(req,res)=>{
 
 router.post("/categories/delete",(req,res)=>{
     let id = req.body.id;
-    console.log(id);
     if(id!= undefined){
 
             Category.destroy({
@@ -47,7 +42,7 @@ router.post("/categories/delete",(req,res)=>{
                 res.redirect("/admin/categories")
             });
     } else{
-        res.redirect("/");
+        res.redirect("/admin/categories");
     }
 });
 
@@ -74,7 +69,7 @@ router.post("/categories/update",(req,res)=>{
     })
     .catch((error)=>{
         console.log(error);
-        res.redirect("/");
+        res.redirect("/admin/categories");
     });
 });
 
