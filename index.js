@@ -8,10 +8,12 @@ const connection = require("./database/connection");
 // controllers
 const categoriesController = require("./controllers/categoriesController");
 const articlesController = require("./controllers/articlesController");
+const usersController = require("./controllers/usersController");
 
 //models
 const Article = require("./database/models/Article");
 const Category = require("./database/models/Category")
+const User = require("./database/models/User")
 
 app.set("view engine", "ejs");
 
@@ -22,6 +24,7 @@ app.use(bodyParser.json());
 //routes
 app.use("/",categoriesController);
 app.use("/", articlesController);
+app.use("/", usersController);
 
 connection
     .authenticate()

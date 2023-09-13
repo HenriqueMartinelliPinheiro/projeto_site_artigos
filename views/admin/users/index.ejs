@@ -24,6 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/categories">Categorias</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/users">Usuários</a>
                 </li>
@@ -31,31 +32,26 @@
         </nav>
 
         <div class="container">
-            <br><h2>Categorias</h2> 
+            <br><h2>Usuários</h2> 
 
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Titúlo</th>
-                        <th>Slug</th>
+                        <th>Email</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <% categories.forEach(category=> { %>
+                    <% users.forEach(user=> { %>
                         <tr>
-                            <th><%=category.id%></th>
-                            <th><%=category.title%></th>
-                            <th><%=category.slug%></th>
+                            <th><%=user.id%></th>
+                            <th><%=user.email%></th>
                             <th>
-                                <form action="/admin/categories/edit" method="POST" style="display: inline"">
-                                    <input type="hidden" name="id" value="<%= category.id%>">
-                                    <button class="btn btn-primary">Editar</button>
-                                </form>
-                                <form action="/categories/delete" method="POST" style="display: inline" onsubmit="deleteConfirm(event, this)">
-                                    <input type="hidden" name="id" value="<%= category.id%>">
+                                    <a href="/admin/users/edit/<%=user.id%>"><button class="btn btn-primary">Editar</button></a>
+                                <form action="/users/delete" method="POST" style="display: inline" onsubmit="deleteConfirm(event, this)">
+                                    <input type="hidden" name="id" value="<%= user.id%>">
                                     <button class="btn btn-secondary">Deletar</button>
                                 </form>
                             </th>
@@ -63,7 +59,7 @@
                     <% }); %>
                 </tbody>
             </table>
-            <a href="/admin/categories/new"><button class="btn btn-success">Castrar Nova Categoria</button></a>
+            <a href="/admin/users/create"><button class="btn btn-success">Castrar Novo Usuáario</button></a>
         </div>
 
     </body>
@@ -74,7 +70,7 @@
 <script>
     function deleteConfirm(event, form){
         event.preventDefault();
-        let decision=confirm("Tem certeza que deseja deletar esta categoria.")
+        let decision=confirm("Tem certeza que deseja deletar este usuário.")
         if (decision) {
             form.submit();
         }

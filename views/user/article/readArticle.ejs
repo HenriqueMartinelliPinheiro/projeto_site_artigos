@@ -4,48 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artigle</title>
+    <title>Guia Press</title>
 
     <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"  crossorigin="anonymous">
 </head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="/admin/articles">
-                Artigle
-            </a>    
-        
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/articles">Artigos</a>
-                </li>
-        
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/categories">Categorias</a>
-                </li>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/user/articles">
+            Artigle
+        </a>
+    
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/user/articles">Artigos</a>
+            </li>
+            <%categories.forEach(category=>{%>
+                <li class="nav-item"><a class="nav-link" href="/user/category/<%=category.slug%>"><%=category.title%></a></li>
+            <%});%>
+        </ul>
+    </nav>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/users">Usuários</a>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="container">
-            <hr>
+    <div class="container">
+            <br>
             <div class="card">
                 <div class="card-header">
-                    <h2>Cadastro de Categorias</h2>
+                    <h2><%=article.title%></h2>
                 </div>
-
                 <div class="card-body">
-                    <form action="/categories/save" method="POST">
-                        <input type="text" name="title" placeholder="Título da categoria" class="form-control">
-                        <br><button class="btn btn-success">Cadastrar</button>
-                    </form>
+                  <%-article.body%>
                 </div>
             </div>
-        </div>
-    </body>
+    </div>
+</body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

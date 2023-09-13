@@ -33,7 +33,7 @@
       </div>
 
     <div class="container">
-        <%result.articles.rows.forEach((article)=>{ %>
+        <%articles.forEach((article)=>{ %>
             <br>
             <div class="card">
                 <div class="card-header">
@@ -44,23 +44,21 @@
                 </div>
             </div>
        <% }); %>
-        <hr>
+        <hr>    
        <div class="row">
-
-        <div class="col col-12">
-            <%if(result.page!=1){%>
-                <a href="/user/articles/page/<%=result.page-1%>" style="float: left;">< Página Anterior</a>
-            <%}%>
-            <%if(result.next){%>
-                <a href="/user/articles/page/<%=result.page+1%>" style="float: right;">Próxima Página ></a>
-            <%}%>
+            <div class="col col-12">
+                <%if(result.page!=1){%>
+                    <a href="/user/articles/page/<%=result.page-1%>" style="float: right;">< Página Anterior</a>
+                <%}%>
+                <%if(result.next){%>
+                    <a href="/user/articles/page/<%=result.page+1%>" style="float: right;">Próxima Página ></a>
+                <%}%>
+            </div>
+        <hr>
         </div>
-    <hr>
+        <hr>
     </div>
-    <hr>
-
-    </div>
-  
+    
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

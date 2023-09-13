@@ -24,6 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/categories">Categorias</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/users">Usuários</a>
                 </li>
@@ -31,41 +32,42 @@
         </nav>
 
         <div class="container">
-            <br><h2>Categorias</h2> 
+            <br><h2>Artigos</h2> 
 
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Titúlo</th>
                         <th>Slug</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <% categories.forEach(category=> { %>
+
+                    <% articles.forEach(article =>{%>
                         <tr>
-                            <th><%=category.id%></th>
-                            <th><%=category.title%></th>
-                            <th><%=category.slug%></th>
+                            <th><%=article.title%></th>
+                            <th><%=article.slug%></th>
+                            <th><%=article.category.title%></th>
                             <th>
-                                <form action="/admin/categories/edit" method="POST" style="display: inline"">
-                                    <input type="hidden" name="id" value="<%= category.id%>">
+                                <form action="/admin/articles/edit" method="POST" style="display: inline">
+                                    <input type="hidden" name="id" value="<%=article.id%>">
                                     <button class="btn btn-primary">Editar</button>
                                 </form>
-                                <form action="/categories/delete" method="POST" style="display: inline" onsubmit="deleteConfirm(event, this)">
-                                    <input type="hidden" name="id" value="<%= category.id%>">
+                                <form action="/articles/delete" method="POST" style="display: inline" onsubmit="deleteConfirm(event,this)">
+                                    <input type="hidden" name="id" value="<%=article.id%>">
                                     <button class="btn btn-secondary">Deletar</button>
                                 </form>
                             </th>
                         </tr>
-                    <% }); %>
+                    <%})%>
+                   
                 </tbody>
             </table>
-            <a href="/admin/categories/new"><button class="btn btn-success">Castrar Nova Categoria</button></a>
-        </div>
-
+            <a href="/admin/articles/new"><button class="btn btn-success">Castrar Novo Artigo</button></a>
+        </div><br>
     </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -74,10 +76,10 @@
 <script>
     function deleteConfirm(event, form){
         event.preventDefault();
-        let decision=confirm("Tem certeza que deseja deletar esta categoria.")
+        let decision=confirm("Tem certeza que deseja deletar este artigo.")
         if (decision) {
             form.submit();
         }
     }
 </script>
-</html>
+</html> 
