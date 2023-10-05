@@ -2,12 +2,12 @@ const express = require("express");
 const Category = require("../database/models/Category");
 const { default: slugify } = require("slugify");
 const router = express.Router();
-
+const adminAuth = require("./../middlewares/adminAuth");
 router.get("/admin/categories/new", (req,res)=>{
     res.render("admin/category/newCategory");
 });
 
-router.post("/categories/save",(req,res)=>{
+router.post("/categories/save", adminAuth,(req,res)=>{
    let title = req.body.title;
 
     if (title!=undefined) {
@@ -24,13 +24,13 @@ router.post("/categories/save",(req,res)=>{
     }
 });
 
-router.get("/admin/categories",(req,res)=>{
+router.get("/admin/categories",adminAuth,(req,res)=>{
     Category.findAll().then(categories=>{
         res.render("admin/category/index", {categories: categories});
     });
 });
 
-router.post("/categories/delete",(req,res)=>{
+router.post("/categories/delete",adminAuth,(req,res)=>{
     let id = req.body.id;
     if(id!= undefined){
 
@@ -46,7 +46,7 @@ router.post("/categories/delete",(req,res)=>{
     }
 });
 
-router.post("/admin/categories/edit",(req,res)=>{
+router.post("/admin/categories/edit",adminAuth,(req,res)=>{
     let id = req.body.id;
     Category.findByPk(id).then((category)=>{
         if (category!=undefined) {
@@ -59,7 +59,7 @@ router.post("/admin/categories/edit",(req,res)=>{
     });
 });
 
-router.post("/categories/update",(req,res)=>{
+router.post("/categories/update",adminAuth,(req,res)=>{
     let id = req.body.id;
     let title = req.body.title;
     console.log(req.body.title);

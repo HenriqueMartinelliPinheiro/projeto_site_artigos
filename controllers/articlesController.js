@@ -4,8 +4,13 @@
     const Article = require("../database/models/Article");
     const { default: slugify } = require("slugify");
     const { json } = require("body-parser");
+    const adminAuth = require("./../middlewares/adminAuth");
 
-    router.get("/admin/articles", (req,res)=>{
+    router.get("/",(req,res)=>{
+        res.redirect("/user/articles")
+    });
+    
+    router.get("/admin/articles",adminAuth, (req,res)=>{
         Article.findAll({
             include: [{model:Category}],
         }).then(articles=>{
@@ -36,7 +41,7 @@
         res.redirect("/user/articles/page/1");
     });  
 
-    router.get("/admin/articles/new", (req,res)=>{
+    router.get("/admin/articles/new", adminAuth,(req,res)=>{
         Category.findAll({
             order: [['title', 'ASC'],],
         }).then((categories )=>{
@@ -44,7 +49,7 @@
         });
     });
 
-    router.post("/articles/save",(req,res)=>{
+    router.post("/articles/save",adminAuth,(req,res)=>{
         let categoryId = req.body.categoryId;
         let title = req.body.title;
         let body = req.body.body;
@@ -61,7 +66,7 @@
         })
     });
 
-    router.post("/articles/delete", (req,res)=>{
+    router.post("/articles/delete", adminAuth,(req,res)=>{
         let id = req.body.id;
 
         if(id!=undefined){
@@ -79,7 +84,7 @@
         }
     });
 
-    router.post("/admin/articles/edit", (req,res)=>{
+    router.post("/admin/articles/edit", adminAuth,(req,res)=>{
         let id = req.body.id;
         Article.findByPk(id).then((article)=>{
             if(article!=undefined){
@@ -94,7 +99,7 @@
         })
     });
 
-    router.post("/articles/update", (req,res)=>{
+    router.post("/articles/update", adminAuth,(req,res)=>{
         let title = req.body.title;
         let id = req.body.id;
         let categoryId = req.body.categoryId;
@@ -126,7 +131,7 @@
         }).then((category)=>{
             if (category!=undefined) {
                 Category.findAll().then((categories)=>{
-                    res.render("user/article/index",{articles:category.articles, categories:categories});
+                    res.render("user/article/allArticles",{articles:category.articles, categories:categories});
                 });
             } else {
                 res.redirect("user/articles");

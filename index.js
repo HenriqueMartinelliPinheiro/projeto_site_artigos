@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const app =express();
-
+const session = require("express-session");
 //DB connection
 const connection = require("./database/connection");
 
@@ -16,6 +16,10 @@ const Category = require("./database/models/Category")
 const User = require("./database/models/User")
 
 app.set("view engine", "ejs");
+app.use(session({
+    secret: "abc123",
+    cookie: {maxAge: 30000} 
+}));
 
 //body-parser
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,6 +29,15 @@ app.use(bodyParser.json());
 app.use("/",categoriesController);
 app.use("/", articlesController);
 app.use("/", usersController);
+
+app.get("/session", (req,res)=>{
+    req.session.treinamento = "for";
+
+});
+
+app.get("/read",(req,ress)=>{
+
+}); 
 
 connection
     .authenticate()
